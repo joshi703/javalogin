@@ -1,0 +1,367 @@
+
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>eMudhra | Login</title>
+
+    <style>
+        :root {
+            --bg: #f4f1ff;
+            --card: #ffffff;
+            --text: #25213a;
+            --muted: #77738a;
+            --input: #ffffff;
+            --border: #ded9ed;
+            --purple: #7138c8;
+            --purple-dark: #5424a5;
+        }
+
+        [data-theme="dark"] {
+            --bg: #171326;
+            --card: #251d38;
+            --text: #f5f1ff;
+            --muted: #b9aecb;
+            --input: #302643;
+            --border: #514365;
+            --purple: #a77af0;
+            --purple-dark: #8c5cdb;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 25px;
+            font-family: Arial, sans-serif;
+            color: var(--text);
+            background:
+                radial-gradient(circle at 10% 15%, #e5d8ff 0, transparent 30%),
+                radial-gradient(circle at 90% 85%, #e9ddff 0, transparent 30%),
+                var(--bg);
+            transition: background 0.3s, color 0.3s;
+        }
+
+        [data-theme="dark"] body {
+            background:
+                radial-gradient(circle at 10% 15%, #35244f 0, transparent 30%),
+                radial-gradient(circle at 90% 85%, #302044 0, transparent 30%),
+                var(--bg);
+        }
+
+        .theme-toggle {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 9px 14px;
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            background: var(--card);
+            color: var(--text);
+            cursor: pointer;
+        }
+
+        .login-card {
+            width: 390px;
+            max-width: 100%;
+            padding: 38px;
+            border: 1px solid var(--border);
+            border-radius: 18px;
+            background: var(--card);
+            box-shadow: 0 12px 40px rgba(66, 38, 110, 0.12);
+        }
+
+        .brand {
+            margin: 0 0 8px;
+            text-align: center;
+            color: var(--purple);
+            font-size: 32px;
+            font-weight: bold;
+            letter-spacing: 0.5px;
+        }
+
+        .subtitle {
+            margin: 0 0 28px;
+            text-align: center;
+            color: var(--muted);
+            font-size: 14px;
+        }
+
+        h2 {
+            margin-bottom: 8px;
+            text-align: center;
+            font-size: 23px;
+        }
+
+        .description {
+            margin-bottom: 25px;
+            text-align: center;
+            color: var(--muted);
+            font-size: 14px;
+        }
+
+        .field-label {
+            display: block;
+            margin: 15px 0 7px;
+            font-size: 13px;
+            font-weight: bold;
+        }
+
+        input {
+            width: 100%;
+            padding: 13px;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            background: var(--input);
+            color: var(--text);
+            font-size: 14px;
+            outline: none;
+        }
+
+        input:focus {
+            border-color: var(--purple);
+            box-shadow: 0 0 0 3px rgba(113, 56, 200, 0.12);
+        }
+
+        .password-container {
+            display: flex;
+            align-items: center;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            background: var(--input);
+        }
+
+        .password-container:focus-within {
+            border-color: var(--purple);
+            box-shadow: 0 0 0 3px rgba(113, 56, 200, 0.12);
+        }
+
+        .password-container input {
+            border: none;
+            box-shadow: none;
+            min-width: 0;
+        }
+
+        .show-password {
+            padding: 10px;
+            border: none;
+            background: transparent;
+            color: var(--text);
+            cursor: pointer;
+            font-size: 18px;
+        }
+
+        .login-button {
+            width: 100%;
+            margin-top: 24px;
+            padding: 13px;
+            border: none;
+            border-radius: 8px;
+            background: var(--purple);
+            color: white;
+            font-size: 15px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .login-button:hover {
+            background: var(--purple-dark);
+        }
+
+        .message {
+            text-align: center;
+            color: #16834a;
+            font-size: 13px;
+        }
+
+        .error {
+            text-align: center;
+            color: #dc3545;
+            font-size: 13px;
+        }
+
+        .forgot-password-link {
+            display: block;
+            text-align: right;
+            margin-top: 10px;
+            font-size: 13px;
+        }
+
+        .register-text {
+            margin-top: 23px;
+            text-align: center;
+            color: var(--muted);
+            font-size: 14px;
+        }
+
+        a {
+            color: var(--purple);
+            font-weight: bold;
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        .footer {
+            margin-top: 25px;
+            text-align: center;
+            color: var(--muted);
+            font-size: 11px;
+        }
+
+        @media (max-width: 480px) {
+            .login-card {
+                padding: 28px 22px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <button type="button" class="theme-toggle" id="themeToggle">
+        🌙 Dark Mode
+    </button>
+
+    <main class="login-card">
+
+        <h1 class="brand">eMudhra</h1>
+        <p class="subtitle">Secure Login Portal</p>
+
+        <h2>Welcome Back</h2>
+        <p class="description">Please sign in to continue</p>
+
+        <p class="message" th:if="${param.registered}">
+            Registration successful! Please log in.
+        </p>
+
+        <p class="message" th:if="${param.logout}">
+            You have logged out successfully.
+        </p>
+
+        <p class="message" th:if="${param.resetSuccess}">
+            Password reset successful! Please log in with your new password.
+        </p>
+
+        <p class="error" th:if="${param.error}">
+            Invalid email or password.
+        </p>
+
+        <form th:action="@{/login}" method="post">
+
+            <label class="field-label" for="email">Email Address</label>
+
+            <input type="email"
+                   id="email"
+                   name="email"
+                   placeholder="Enter your email"
+                   autocomplete="username"
+                   required>
+
+            <label class="field-label" for="password">Password</label>
+
+            <div class="password-container">
+
+                <input type="password"
+                       id="password"
+                       name="password"
+                       placeholder="Enter your password"
+                       autocomplete="current-password"
+                       required>
+
+                <button type="button"
+                        class="show-password"
+                        id="showPassword"
+                        aria-label="Show password">
+                    👁️
+                </button>
+
+            </div>
+
+            <a th:href="@{/forgot-password}" class="forgot-password-link">
+                Forgot Password?
+            </a>
+
+            <button type="submit" class="login-button">
+                Sign In
+            </button>
+
+        </form>
+
+        <p class="register-text">
+            Don't have an account?
+            <a th:href="@{/register}">Create an account</a>
+        </p>
+
+        <p class="footer">
+            © 2026 eMudhra | Secure Login Portal
+        </p>
+
+    </main>
+
+    <script>
+        // Dark and light theme
+
+        const themeToggle = document.getElementById("themeToggle");
+
+        const savedTheme =
+            localStorage.getItem("loginapp-theme") || "light";
+
+        document.documentElement.setAttribute("data-theme", savedTheme);
+
+        function updateThemeButton() {
+            const currentTheme =
+                document.documentElement.getAttribute("data-theme");
+
+            themeToggle.textContent =
+                currentTheme === "dark"
+                    ? "☀️ Light Mode"
+                    : "🌙 Dark Mode";
+        }
+
+        updateThemeButton();
+
+        themeToggle.addEventListener("click", function () {
+            const currentTheme =
+                document.documentElement.getAttribute("data-theme");
+
+            const newTheme =
+                currentTheme === "dark" ? "light" : "dark";
+
+            document.documentElement.setAttribute("data-theme", newTheme);
+            localStorage.setItem("loginapp-theme", newTheme);
+
+            updateThemeButton();
+        });
+
+        // Show and hide password
+
+        const passwordInput = document.getElementById("password");
+        const showPassword = document.getElementById("showPassword");
+
+        showPassword.addEventListener("click", function () {
+            if (passwordInput.type === "password") {
+                passwordInput.type = "text";
+                showPassword.textContent = "🙈";
+                showPassword.setAttribute("aria-label", "Hide password");
+            } else {
+                passwordInput.type = "password";
+                showPassword.textContent = "👁️";
+                showPassword.setAttribute("aria-label", "Show password");
+            }
+        });
+    </script>
+
+</body>
+</html>

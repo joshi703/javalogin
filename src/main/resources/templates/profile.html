@@ -1,0 +1,366 @@
+
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>eMudhra | My Profile</title>
+
+    <style>
+        :root {
+            --bg: #f4f1ff;
+            --card: #ffffff;
+            --text: #25213a;
+            --muted: #77738a;
+            --border: #ded9ed;
+            --purple: #7138c8;
+            --purple-dark: #5424a5;
+            --input: #ffffff;
+        }
+
+        [data-theme="dark"] {
+            --bg: #171326;
+            --card: #251d38;
+            --text: #f5f1ff;
+            --muted: #b9aecb;
+            --border: #514365;
+            --purple: #a77af0;
+            --purple-dark: #8c5cdb;
+            --input: #302642;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            min-height: 100vh;
+            font-family: Arial, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            transition: 0.3s;
+        }
+
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 7%;
+            background: var(--card);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .brand {
+            color: var(--purple);
+            font-size: 26px;
+            font-weight: bold;
+        }
+
+        .theme-toggle {
+            padding: 9px 14px;
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            background: var(--card);
+            color: var(--text);
+            cursor: pointer;
+        }
+
+        .container {
+            max-width: 750px;
+            margin: 45px auto;
+            padding: 20px;
+        }
+
+        .heading {
+            margin-bottom: 25px;
+        }
+
+        .heading h1 {
+            font-size: 28px;
+            margin-bottom: 8px;
+        }
+
+        .heading p {
+            color: var(--muted);
+        }
+
+        .profile-card {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 15px;
+            padding: 35px;
+            box-shadow: 0 8px 25px rgba(66, 38, 110, 0.08);
+        }
+
+        .profile-icon {
+            width: 65px;
+            height: 65px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border-radius: 50%;
+            background: #eee4ff;
+            color: #7138c8;
+            font-size: 30px;
+            margin-bottom: 20px;
+        }
+
+        .profile-card h2 {
+            margin-bottom: 8px;
+        }
+
+        .muted {
+            color: var(--muted);
+            font-size: 14px;
+        }
+
+        .form-group {
+            margin-top: 23px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 9px;
+            font-size: 14px;
+            font-weight: bold;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 13px;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            background: var(--input);
+            color: var(--text);
+            font-size: 15px;
+            outline: none;
+        }
+
+        .form-group input:focus {
+            border-color: var(--purple);
+            box-shadow: 0 0 0 3px rgba(113, 56, 200, 0.12);
+        }
+
+        .message {
+            padding: 12px;
+            border-radius: 8px;
+            margin-top: 18px;
+            font-size: 14px;
+        }
+
+        .success {
+            background: #e1f7e9;
+            color: #16834a;
+        }
+
+        .error {
+            background: #ffe5e8;
+            color: #b52a37;
+        }
+
+        .button-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-top: 28px;
+        }
+
+        .save-button,
+        .back-button {
+            display: inline-block;
+            padding: 12px 24px;
+            border: none;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: bold;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        .save-button {
+            background: var(--purple);
+            color: white;
+        }
+
+        .save-button:hover {
+            background: var(--purple-dark);
+        }
+
+        .back-button {
+            background: transparent;
+            border: 1px solid var(--border);
+            color: var(--text);
+        }
+
+        .back-button:hover {
+            background: var(--bg);
+        }
+
+        .footer {
+            text-align: center;
+            margin-top: 40px;
+            color: var(--muted);
+            font-size: 12px;
+        }
+
+        @media (max-width: 600px) {
+            .navbar {
+                padding: 18px;
+            }
+
+            .container {
+                margin-top: 25px;
+            }
+
+            .profile-card {
+                padding: 22px;
+            }
+
+            .heading h1 {
+                font-size: 24px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Navigation -->
+    <header class="navbar">
+        <div class="brand">eMudhra</div>
+
+        <button type="button"
+                class="theme-toggle"
+                id="themeToggle">
+            🌙 Dark Mode
+        </button>
+    </header>
+
+    <!-- Profile Content -->
+    <main class="container">
+
+        <section class="heading">
+            <h1>My Profile</h1>
+            <p>View and manage your account information.</p>
+        </section>
+
+        <section class="profile-card">
+
+            <div class="profile-icon">👤</div>
+
+            <h2>Account Information</h2>
+
+            <p class="muted">
+                Update your username and registered email address.
+            </p>
+
+            <!-- Success Message -->
+            <div th:if="${success}"
+                 class="message success"
+                 th:text="${success}">
+            </div>
+
+            <!-- Error Message -->
+            <div th:if="${error}"
+                 class="message error"
+                 th:text="${error}">
+            </div>
+
+            <!-- Profile Update Form -->
+            <form th:action="@{/profile}" method="post">
+
+                <div class="form-group">
+                    <label for="username">Username</label>
+
+                    <input type="text"
+                           id="username"
+                           name="username"
+                           th:value="${username}"
+                           placeholder="Enter your username"
+                           maxlength="100"
+                           required>
+                </div>
+
+                <div class="form-group">
+                    <label for="email">Email Address</label>
+
+                    <input type="email"
+                           id="email"
+                           name="email"
+                           th:value="${email}"
+                           placeholder="Enter your email"
+                           maxlength="254"
+                           required>
+                </div>
+
+                <div class="button-group">
+
+                    <button type="submit" class="save-button">
+                        Save Changes
+                    </button>
+
+                    <a th:href="@{/dashboard}" class="back-button">
+                        Back to Dashboard
+                    </a>
+
+                </div>
+
+            </form>
+
+        </section>
+
+        <footer class="footer">
+            © 2026 eMudhra | Secure Login Portal
+        </footer>
+
+    </main>
+
+    <!-- Dark and Light Mode -->
+    <script>
+
+        const themeToggle =
+            document.getElementById("themeToggle");
+
+        const savedTheme =
+            localStorage.getItem("loginapp-theme") || "light";
+
+        document.documentElement.setAttribute(
+            "data-theme", savedTheme
+        );
+
+        function updateThemeButton() {
+
+            const currentTheme =
+                document.documentElement.getAttribute("data-theme");
+
+            themeToggle.textContent =
+                currentTheme === "dark"
+                    ? "☀️ Light Mode"
+                    : "🌙 Dark Mode";
+        }
+
+        updateThemeButton();
+
+        themeToggle.addEventListener("click", function () {
+
+            const currentTheme =
+                document.documentElement.getAttribute("data-theme");
+
+            const newTheme =
+                currentTheme === "dark" ? "light" : "dark";
+
+            document.documentElement.setAttribute(
+                "data-theme", newTheme
+            );
+
+            localStorage.setItem("loginapp-theme", newTheme);
+
+            updateThemeButton();
+        });
+
+    </script>
+
+</body>
+</html>

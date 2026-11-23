@@ -1,0 +1,362 @@
+
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>eMudhra | Dashboard</title>
+
+    <style>
+
+        :root {
+            --bg: #f4f1ff;
+            --card: #ffffff;
+            --text: #25213a;
+            --muted: #77738a;
+            --border: #ded9ed;
+            --purple: #7138c8;
+            --purple-dark: #5424a5;
+        }
+
+        [data-theme="dark"] {
+            --bg: #171326;
+            --card: #251d38;
+            --text: #f5f1ff;
+            --muted: #b9aecb;
+            --border: #514365;
+            --purple: #a77af0;
+            --purple-dark: #8c5cdb;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            min-height: 100vh;
+            font-family: Arial, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            transition: 0.3s;
+        }
+
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 7%;
+            background: var(--card);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .brand {
+            color: var(--purple);
+            font-size: 26px;
+            font-weight: bold;
+        }
+
+        .nav-right {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .theme-toggle {
+            padding: 9px 14px;
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            background: var(--card);
+            color: var(--text);
+            cursor: pointer;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 55px auto;
+            padding: 20px;
+        }
+
+        .welcome-section {
+            margin-bottom: 30px;
+        }
+
+        .welcome-section h1 {
+            margin-bottom: 10px;
+            font-size: 28px;
+        }
+
+        .welcome-section p {
+            color: var(--muted);
+        }
+
+        .dashboard-card {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 8px 25px rgba(66, 38, 110, 0.08);
+        }
+
+        .profile-icon {
+            width: 65px;
+            height: 65px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border-radius: 50%;
+            background: #eee4ff;
+            color: #7138c8;
+            font-size: 28px;
+            margin-bottom: 20px;
+        }
+
+        .dashboard-card h2 {
+            margin-bottom: 8px;
+        }
+
+        .muted {
+            color: var(--muted);
+            font-size: 14px;
+        }
+
+        .detail-box {
+            margin-top: 25px;
+            padding: 18px;
+            border: 1px solid var(--border);
+            border-radius: 9px;
+        }
+
+        .detail-label {
+            color: var(--muted);
+            font-size: 13px;
+            margin-bottom: 8px;
+        }
+
+        .email {
+            font-weight: bold;
+            overflow-wrap: anywhere;
+        }
+
+        .status {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 7px 13px;
+            border-radius: 20px;
+            background: #e1f7e9;
+            color: #16834a;
+            font-size: 12px;
+            font-weight: bold;
+        }
+
+        .profile-button {
+            display: inline-block;
+            margin-top: 25px;
+            margin-right: 10px;
+            padding: 12px 25px;
+            border-radius: 8px;
+            background: var(--purple);
+            color: white;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: bold;
+            transition: 0.2s;
+        }
+
+        .profile-button:hover {
+            background: var(--purple-dark);
+        }
+
+        .logout-button {
+            margin-top: 25px;
+            padding: 12px 25px;
+            border: none;
+            border-radius: 8px;
+            background: #dc3545;
+            color: white;
+            font-size: 14px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .logout-button:hover {
+            background: #b52a37;
+        }
+
+        .footer {
+            text-align: center;
+            margin-top: 45px;
+            color: var(--muted);
+            font-size: 12px;
+        }
+
+        @media (max-width: 600px) {
+            .navbar {
+                padding: 18px;
+            }
+
+            .container {
+                margin-top: 30px;
+            }
+
+            .welcome-section h1 {
+                font-size: 23px;
+            }
+
+            .dashboard-card {
+                padding: 22px;
+            }
+        }
+
+    </style>
+</head>
+
+<body>
+
+    <!-- Navigation Bar -->
+
+    <header class="navbar">
+
+        <div class="brand">eMudhra</div>
+
+        <div class="nav-right">
+
+            <button type="button"
+                    class="theme-toggle"
+                    id="themeToggle">
+                🌙 Dark Mode
+            </button>
+
+        </div>
+
+    </header>
+
+
+    <!-- Dashboard Content -->
+
+    <main class="container">
+
+        <section class="welcome-section">
+
+            <h1>Welcome to Your Dashboard!</h1>
+
+            <p>
+                You have successfully logged in to your account.
+            </p>
+
+        </section>
+
+
+        <!-- Account Details -->
+
+        <section class="dashboard-card">
+
+            <div class="profile-icon">👤</div>
+
+            <h2>Account Overview</h2>
+
+            <p class="muted">
+                Here are your account details.
+            </p>
+
+            <div class="detail-box">
+
+                <p class="detail-label">
+                    Registered Email Address
+                </p>
+
+                <p class="email" th:text="${email}"></p>
+
+            </div>
+
+            <div class="status">
+                ● Account Logged In
+            </div>
+
+
+            <!-- My Profile Button -->
+
+            <a th:href="@{/profile}" class="profile-button">
+                My Profile
+            </a>
+			
+			<!-- Login Activity Button -->
+			<a th:href="@{/activity}" class="profile-button">
+			    Login Activity
+			</a>
+
+            <!-- Logout Button -->
+
+            <form th:action="@{/logout}" method="post">
+
+                <button type="submit" class="logout-button">
+                    Logout
+                </button>
+
+            </form>
+
+        </section>
+
+
+        <!-- Footer -->
+
+        <footer class="footer">
+
+            © 2026 eMudhra | Secure Login Portal
+
+        </footer>
+
+    </main>
+
+
+    <!-- Dark and Light Mode -->
+
+    <script>
+
+        const themeToggle =
+            document.getElementById("themeToggle");
+
+        const savedTheme =
+            localStorage.getItem("loginapp-theme") || "light";
+
+        document.documentElement.setAttribute(
+            "data-theme", savedTheme
+        );
+
+        function updateThemeButton() {
+
+            const currentTheme =
+                document.documentElement.getAttribute("data-theme");
+
+            themeToggle.textContent =
+                currentTheme === "dark"
+                    ? "☀️ Light Mode"
+                    : "🌙 Dark Mode";
+        }
+
+        updateThemeButton();
+
+        themeToggle.addEventListener("click", function () {
+
+            const currentTheme =
+                document.documentElement.getAttribute("data-theme");
+
+            const newTheme =
+                currentTheme === "dark" ? "light" : "dark";
+
+            document.documentElement.setAttribute(
+                "data-theme", newTheme
+            );
+
+            localStorage.setItem("loginapp-theme", newTheme);
+
+            updateThemeButton();
+
+        });
+
+    </script>
+
+</body>
+</html>

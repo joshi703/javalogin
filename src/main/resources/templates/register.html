@@ -1,0 +1,405 @@
+
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>eMudhra | Registration</title>
+
+    <style>
+        :root {
+            --bg: #f4f1ff;
+            --card: #ffffff;
+            --text: #25213a;
+            --muted: #77738a;
+            --input: #ffffff;
+            --border: #ded9ed;
+            --purple: #7138c8;
+            --purple-dark: #5424a5;
+        }
+
+        [data-theme="dark"] {
+            --bg: #171326;
+            --card: #251d38;
+            --text: #f5f1ff;
+            --muted: #b9aecb;
+            --input: #302643;
+            --border: #514365;
+            --purple: #a77af0;
+            --purple-dark: #8c5cdb;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 25px;
+            font-family: Arial, sans-serif;
+            color: var(--text);
+            background:
+                radial-gradient(circle at 10% 15%, #e5d8ff 0, transparent 30%),
+                radial-gradient(circle at 90% 85%, #e9ddff 0, transparent 30%),
+                var(--bg);
+            transition: background 0.3s, color 0.3s;
+        }
+
+        [data-theme="dark"] body {
+            background:
+                radial-gradient(circle at 10% 15%, #35244f 0, transparent 30%),
+                radial-gradient(circle at 90% 85%, #302044 0, transparent 30%),
+                var(--bg);
+        }
+
+        .theme-toggle {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 9px 14px;
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            background: var(--card);
+            color: var(--text);
+            cursor: pointer;
+        }
+
+        .register-card {
+            width: 390px;
+            max-width: 100%;
+            padding: 35px;
+            border: 1px solid var(--border);
+            border-radius: 18px;
+            background: var(--card);
+            box-shadow: 0 12px 40px rgba(66, 38, 110, 0.12);
+        }
+
+        .brand {
+            margin: 0 0 8px;
+            text-align: center;
+            color: var(--purple);
+            font-size: 32px;
+            font-weight: bold;
+        }
+
+        .subtitle {
+            margin: 0 0 25px;
+            text-align: center;
+            color: var(--muted);
+            font-size: 14px;
+        }
+
+        h2 {
+            margin-bottom: 8px;
+            text-align: center;
+            font-size: 23px;
+        }
+
+        .description {
+            margin-bottom: 22px;
+            text-align: center;
+            color: var(--muted);
+            font-size: 14px;
+        }
+
+        .field-label {
+            display: block;
+            margin: 15px 0 7px;
+            font-size: 13px;
+            font-weight: bold;
+        }
+
+        input {
+            width: 100%;
+            padding: 13px;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            background: var(--input);
+            color: var(--text);
+            font-size: 14px;
+            outline: none;
+        }
+
+        input:focus {
+            border-color: var(--purple);
+            box-shadow: 0 0 0 3px rgba(113, 56, 200, 0.12);
+        }
+
+        .password-container {
+            display: flex;
+            align-items: center;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            background: var(--input);
+        }
+
+        .password-container:focus-within {
+            border-color: var(--purple);
+            box-shadow: 0 0 0 3px rgba(113, 56, 200, 0.12);
+        }
+
+        .password-container input {
+            border: none;
+            box-shadow: none;
+            min-width: 0;
+        }
+
+        .show-password {
+            padding: 10px;
+            border: none;
+            background: transparent;
+            color: var(--text);
+            cursor: pointer;
+            font-size: 18px;
+        }
+
+        .strength-text {
+            margin-top: 8px;
+            font-size: 12px;
+            color: var(--muted);
+        }
+
+        .strength-bar {
+            height: 5px;
+            margin-top: 7px;
+            border-radius: 5px;
+            background: var(--border);
+            overflow: hidden;
+        }
+
+        .strength-fill {
+            width: 0;
+            height: 100%;
+            transition: width 0.3s, background 0.3s;
+        }
+
+        .register-button {
+            width: 100%;
+            margin-top: 24px;
+            padding: 13px;
+            border: none;
+            border-radius: 8px;
+            background: var(--purple);
+            color: white;
+            font-size: 15px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .register-button:hover {
+            background: var(--purple-dark);
+        }
+
+        .error {
+            text-align: center;
+            color: #dc3545;
+            font-size: 13px;
+        }
+
+        .login-text {
+            margin-top: 22px;
+            text-align: center;
+            color: var(--muted);
+            font-size: 14px;
+        }
+
+        a {
+            color: var(--purple);
+            font-weight: bold;
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        .footer {
+            margin-top: 23px;
+            text-align: center;
+            color: var(--muted);
+            font-size: 11px;
+        }
+
+        @media (max-width: 480px) {
+            .register-card {
+                padding: 28px 22px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <button type="button" class="theme-toggle" id="themeToggle">
+        🌙 Dark Mode
+    </button>
+
+    <main class="register-card">
+
+        <h1 class="brand">eMudhra</h1>
+        <p class="subtitle">Secure Registration Portal</p>
+
+        <h2>Create Account</h2>
+        <p class="description">Fill in your details to get started</p>
+
+        <p class="error" th:if="${error}" th:text="${error}"></p>
+
+        <form th:action="@{/register}" th:object="${user}" method="post">
+
+            <label class="field-label" for="username">Username</label>
+            <input type="text"
+                   id="username"
+                   th:field="*{username}"
+                   placeholder="Enter your username"
+                   autocomplete="username"
+                   required>
+
+            <label class="field-label" for="email">Email Address</label>
+            <input type="email"
+                   id="email"
+                   th:field="*{email}"
+                   placeholder="Enter your email"
+                   autocomplete="email"
+                   required>
+
+            <label class="field-label" for="password">Password</label>
+
+            <div class="password-container">
+                <input type="password"
+                       id="password"
+                       th:field="*{password}"
+                       placeholder="Create a password"
+                       autocomplete="new-password"
+                       required>
+
+                <button type="button"
+                        class="show-password"
+                        id="showPassword"
+                        aria-label="Show password">
+                    👁️
+                </button>
+            </div>
+
+            <div class="strength-bar">
+                <div class="strength-fill" id="strengthFill"></div>
+            </div>
+
+            <p class="strength-text" id="strengthText" aria-live="polite">
+                Password strength: Not entered
+            </p>
+
+            <button type="submit" class="register-button">
+                Create Account
+            </button>
+
+        </form>
+
+        <p class="login-text">
+            Already have an account?
+            <a th:href="@{/login}">Sign In</a>
+        </p>
+
+        <p class="footer">
+            © 2026 eMudhra | Secure Registration Portal
+        </p>
+
+    </main>
+
+    <script>
+        // Dark and light theme
+
+        const themeToggle = document.getElementById("themeToggle");
+
+        const savedTheme =
+            localStorage.getItem("loginapp-theme") || "light";
+
+        document.documentElement.setAttribute("data-theme", savedTheme);
+
+        function updateThemeButton() {
+            const currentTheme =
+                document.documentElement.getAttribute("data-theme");
+
+            themeToggle.textContent =
+                currentTheme === "dark"
+                    ? "☀️ Light Mode"
+                    : "🌙 Dark Mode";
+        }
+
+        updateThemeButton();
+
+        themeToggle.addEventListener("click", function () {
+            const currentTheme =
+                document.documentElement.getAttribute("data-theme");
+
+            const newTheme =
+                currentTheme === "dark" ? "light" : "dark";
+
+            document.documentElement.setAttribute("data-theme", newTheme);
+            localStorage.setItem("loginapp-theme", newTheme);
+
+            updateThemeButton();
+        });
+
+
+        // Show and hide password
+
+        const passwordInput = document.getElementById("password");
+        const showPassword = document.getElementById("showPassword");
+
+        showPassword.addEventListener("click", function () {
+            if (passwordInput.type === "password") {
+                passwordInput.type = "text";
+                showPassword.textContent = "🙈";
+                showPassword.setAttribute("aria-label", "Hide password");
+            } else {
+                passwordInput.type = "password";
+                showPassword.textContent = "👁️";
+                showPassword.setAttribute("aria-label", "Show password");
+            }
+        });
+
+
+        // Password strength indicator
+
+        const strengthFill = document.getElementById("strengthFill");
+        const strengthText = document.getElementById("strengthText");
+
+        passwordInput.addEventListener("input", function () {
+
+            const password = passwordInput.value;
+            let score = 0;
+
+            if (password.length >= 8) score++;
+            if (/[A-Z]/.test(password)) score++;
+            if (/[a-z]/.test(password)) score++;
+            if (/[0-9]/.test(password)) score++;
+            if (/[^A-Za-z0-9]/.test(password)) score++;
+
+            const levels = [
+                { text: "Not entered", width: "0%", color: "transparent" },
+                { text: "Very Weak", width: "20%", color: "#dc3545" },
+                { text: "Weak", width: "40%", color: "#fd7e14" },
+                { text: "Fair", width: "60%", color: "#ffc107" },
+                { text: "Good", width: "80%", color: "#0d6efd" },
+                { text: "Strong", width: "100%", color: "#198754" }
+            ];
+
+            const level = password.length === 0
+                ? levels[0]
+                : levels[score];
+
+            strengthText.textContent =
+                "Password strength: " + level.text;
+
+            strengthFill.style.width = level.width;
+            strengthFill.style.background = level.color;
+        });
+    </script>
+
+</body>
+</html>
